@@ -1,0 +1,361 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Hero from "~/components/Hero.astro";
+import { Picture, Image } from "astro:assets";
+import Badge from "~/components/Badge.astro";
+import Button from "~/components/Button.astro";
+import ButtonCallUs from "~/components/ButtonCallUs.astro";
+import Grid from "~/components/Grid.astro";
+import Heading from "~/components/Heading.astro";
+import WideImage from "~/components/WideImage.astro";
+import ReviewSlider from "~/components/ReviewSlider.astro";
+
+// Images
+import PizzaHero from "~/assets/images/pizza-hero.png";
+import Pizza from "~/assets/images/pizza.png";
+import Spaghetti from "~/assets/images/spaghetti.png";
+import Fish from "~/assets/images/fish.png";
+import DecorativeImage from "~/assets/images/pexels-shvetsa-5953523.jpg";
+import reviewAuthors from "~/assets/images/review-authors.png";
+import Dessert from "~/assets/images/dessert.png";
+import Mussels from "~/assets/images/mussels2.png";
+---
+
+<Layout title="Home" pageTitle="Home" description="Welcome to our restaurant!">
+	<Section class:list={"bg-white"}>
+		<Hero>
+			<div slot="hero-content-left" class="prose max-w-none max-lg:order-1">
+				<Badge title="Selamat Datang" />
+				<h1 class="font-black">Percetakan Kertas Profesional</h1>
+
+				<p>
+				   Jangan Salah Pilih Percetakan! Kami adalah percetakan kertas profesional yang siap membantu Anda dalam
+				   mencetak berbagai jenis produk kertas berkualitas tinggi. Dengan pengalaman bertahun-tahun di industri ini,
+				   kami memahami betul kebutuhan Anda akan produk cetakan yang berkualitas dan tepat waktu.	
+				
+				</p>
+
+				<span class="text-brand-green font-medium">✔ Kami juga bisa mengantar</span>
+
+			
+				<div class="mt-8 flex items-center gap-x-8">
+					<Button url="/book">PESAN SEKARANG</Button>
+					<ButtonCallUs />
+				</div>
+			</div>
+			<div slot="hero-content-right">
+				<Picture
+					class:list={"mx-auto"}
+					src={PizzaHero}
+					height={600}
+					formats={["avif", "webp"]}
+					alt="A description of my image."
+					loading={"eager"}
+					fetchpriority={"high"}
+				/>
+			</div>
+		</Hero>
+	</Section>
+
+	<WideImage image={DecorativeImage} alt="Just an image" class:list={"aspect-video lg:aspect-[16/6]"} />
+
+	<Section class:list={"bg-white"}>
+		<Heading>
+			<h2 slot="heading-title" class="font-black text-brand-green h2">Produk Kami</h2>
+			<p slot="heading-content">
+				Produk kami adalah hasil dari proses cetak yang cermat dan berkualitas tinggi. Bahan baku terbaik untuk memastikan setiap produk yang kami hasilkan memenuhi standar
+				kualitas yang tinggi.
+			</p>
+		</Heading>
+
+		<Grid>
+			<div slot="grid-content-1">
+				<div class="flex flex-col items-center prose text-center">
+					<Picture
+						class:list={"not-prose w-full h-auto"}
+						src={Pizza}
+						formats={["avif", "webp"]}
+						alt="A description of my image."
+					/>
+					<h3 class="h4 mt-0 font-black">	Pembatas Dokumen</h3>
+					<p>
+						Pembatas dokumen adalah alat yang sangat berguna untuk menjaga kerapihan dan keteraturan dokumen
+						Anda. Dengan desain yang menarik dan fungsional, pembatas dokumen kami akan membantu Anda
+						mengorganisir berkas-berkas penting dengan mudah.
+					</p>
+				</div>
+			</div>
+
+			<div slot="grid-content-2">
+				<div class="flex flex-col items-center prose text-center">
+					<Picture
+						class:list={"not-prose w-full h-auto"}
+						src={Spaghetti}
+						formats={["avif", "webp"]}
+						alt="A description of my image."
+					/>
+					<h3 class="h4 mt-0 font-black">Note</h3>
+					<p>
+						Note adalah alat tulis yang sangat penting untuk mencatat informasi penting, ide-ide kreatif,
+						atau sekadar menulis catatan harian. Dengan berbagai ukuran dan desain yang menarik, note kami
+						siap menemani setiap langkah Anda.
+					</p>
+				</div>
+			</div>
+
+			<div slot="grid-content-3">
+				<div class="flex flex-col items-center prose text-center">
+					<Picture
+						class:list={"not-prose w-full h-auto"}
+						src={Fish}
+						formats={["avif", "webp"]}
+						alt="A description of my image."
+					/>
+					<h3 class="h4 mt-0 font-black">Pasta &amp; Spaghetti</h3>
+					<p>
+						Pasta is a staple of Italian cuisine, with a rich history dating back centuries. It comes in
+						various shapes and sizes, each suited to different sauces and preparations.
+					</p>
+				</div>
+			</div>
+		</Grid>
+	</Section>
+
+	<Section class:list={"bg-white"}>
+		<Hero>
+			<div slot="hero-content-left" class="prose lg:order-2">
+				<h1 class="font-black">Mesin Cetak</h1>
+
+				<p>
+					Mesin cetak adalah alat yang digunakan untuk mencetak teks dan gambar pada berbagai media, seperti
+					kertas, karton, dan plastik. Dengan teknologi terbaru, mesin cetak kami mampu menghasilkan cetakan
+					yang tajam dan berkualitas tinggi.
+				</p>
+
+				<p>
+					Mesin cetak kami dilengkapi dengan teknologi canggih yang memungkinkan kami untuk mencetak dengan
+					cepat dan efisien. Kami juga memiliki berbagai jenis mesin cetak untuk memenuhi kebutuhan cetak
+					Anda, mulai dari cetakan kecil hingga besar.
+				</p>
+
+				<div class="mt-8">
+					<Button url="/menu">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="size-5 inline-block"
+							aria-hidden="true"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+								clip-rule="evenodd"></path>
+						</svg>
+						View menu
+					</Button>
+				</div>
+			</div>
+			<div slot="hero-content-right">
+				<Picture
+					class:list={"mx-auto"}
+					src={PizzaHero}
+					height={600}
+					formats={["avif", "webp"]}
+					alt="A description of my image."
+				/>
+			</div>
+		</Hero>
+	</Section>
+
+	<Section class:list={"bg-white"}>
+		<Hero>
+			<div slot="hero-content-left" class="prose max-w-none max-lg:order-1">
+				<Badge color="red" title="delicious" />
+				<h2 class="font-black h2 !my-4">Plate of the week</h2>
+
+				<span class="text-brand-red text-2xl font-bold italic">Fresh Mussels!</span>
+
+				<p>
+					Our plate of the week is a delicious dish that changes every week. This week, we're featuring fresh
+					mussels cooked in a white wine and garlic sauce, served with a side of crispy fries. Don't miss out
+					on this limited-time offer!
+				</p>
+
+				<div class="mt-8">
+					<Button color="red" url="/book">Book now</Button>
+				</div>
+			</div>
+			<div slot="hero-content-right">
+				<Picture
+					class:list={"mx-auto"}
+					src={Mussels}
+					height={600}
+					formats={["avif", "webp"]}
+					alt="A description of my image."
+				/>
+			</div>
+		</Hero>
+	</Section>
+
+	<!-- Reviews -->
+	<Section class="bg-brand-red/20 relative text-center">
+		{/* Wrapper utama: flex row, center horizontal & vertical */}
+		<div class="py-16 flex flex-col lg:flex-row items-center justify-center min-h-[60vh]">
+		  
+		  {/* Bagian Penilaian Pelanggan */}
+		  <div class="lg:w-1/2 px-6 mb-8 lg:mb-0">
+			<Hero>
+			  {/* Konten kiri (sebenarnya kini full-width karena text-center) */}
+			  <div
+				slot="hero-content-left"
+				class="prose max-w-none text-center mx-auto"
+			  >
+				{/* Judul di tengah */}
+				<h2
+				  slot="heading-title"
+				  class="font-black text-4xl mb-2"
+				>
+				  PENILAIAN PELANGGAN
+				</h2>
+				{/* Garis aksen di tengah */}
+				<div class="w-16 h-1 bg-brand-red rounded mx-auto mb-6"></div>
+	  
+				{/* Paragraf di tengah, dibatasi lebar agar nyaman dibaca */}
+				<div slot="heading-content">
+				  <p class="text-lg text-gray-700 mb-8 mx-auto max-w-xl">
+					Kami selalu mengutamakan kepuasan pelanggan. Berikut beberapa
+					ulasan klien kami tentang layanan percetakan berkualitas dari
+					Grafika Printing Gemilang.
+				  </p>
+	  
+				  {/* Slider benar-benar di tengah */}
+				  <div class="mx-auto w-full max-w-md">
+					<ReviewSlider />
+				  </div>
+				</div>
+			  </div>
+			</Hero>
+		  </div>
+	  
+		  {/* Bagian Kerjasama Bisnis */}
+		  <div class="lg:w-1/2 px-6">
+			<Hero>
+			  {/* Konten kanan */}
+			  <div
+				slot="hero-content-left"
+				class="prose max-w-none text-center mx-auto"
+			  >
+				{/* Judul di tengah */}
+				<h2
+				  slot="heading-title"
+				  class="font-black text-4xl mb-2"
+				>
+				  KERJASAMA BISNIS
+				</h2>
+				{/* Garis aksen di tengah */}
+				<div class="w-16 h-1 bg-brand-blue rounded mx-auto mb-6"></div>
+	  
+				{/* Paragraf di tengah, dibatasi lebar agar nyaman dibaca */}
+				<div slot="heading-content">
+				  <p class="text-lg text-gray-700 mb-8 mx-auto max-w-xl">
+					Kami percaya bahwa kerjasama yang baik menghasilkan hasil yang luar biasa. 
+					Berikut adalah beberapa mitra kami dari berbagai industri yang telah bekerja sama dengan kami dalam menyediakan layanan percetakan berkualitas.
+				  </p>
+	  
+				  {/* Gallery atau daftar mitra */}
+				  <div class="gap-8 mx-auto max-w-4xl">
+					<div class="p-4 bg-white shadow rounded-md text-center">
+						<Picture
+						class:list={"not-prose w-full h-auto max-w-[500px] mx-auto"}
+						src={reviewAuthors}
+						formats={["avif", "webp"]}
+						alt="A description of my image."
+					/>
+					  <p class="text-sm font-semibold">Perusahaan A</p>
+					</div>
+					<div class="p-4 bg-white shadow rounded-md text-center">
+					  <img src="partner-logo-2.png" alt="Mitra 2" class="mx-auto mb-4 w-24 h-24 object-contain"/>
+					  <p class="text-sm font-semibold">Perusahaan B</p>
+					</div>
+					{/* Tambahkan lebih banyak mitra sesuai kebutuhan */}
+				  </div>
+				</div>
+			  </div>
+			</Hero>
+		  </div>
+	  
+		</div>
+	  </Section>
+	  
+	<!-- Desserts -->
+	<Section class:list={"bg-white"}>
+		<Hero>
+			<div slot="hero-content-left" class="prose max-w-none order-2">
+				<Badge title="dolce" />
+				<h2 slot="heading-title" class="font-black text-brand-green h2 !my-4">Desserts</h2>
+				<div slot="heading-content">
+					<p>
+						Indulge in our selection of sweet treats, from classic tiramisu to decadent chocolate cake. Our
+						desserts are the perfect way to end your meal on a high note.
+					</p>
+
+					<p>
+						Experience the taste of Italy with our authentic dishes made from the finest ingredients.
+						Indulge in our wide variety of pizzas, pastas, and desserts, all crafted with love and
+						tradition. Whether you're dining in or taking out, we promise a memorable culinary experience.
+					</p>
+
+					<div class="mt-8">
+						<Button url="/menu">See our menu</Button>
+					</div>
+				</div>
+			</div>
+
+			<div slot="hero-content-right">
+				<Picture
+					class:list={"mx-auto"}
+					src={Dessert}
+					height={600}
+					formats={["avif", "webp"]}
+					alt="A description of my image."
+				/>
+			</div>
+		</Hero>
+	</Section>
+
+	<!-- Contact -->
+	<Section class:list={"bg-white"}>
+		<Hero>
+			<div slot="hero-content-left" class="prose max-w-none">
+				<Badge color="red" title="benvenuto" />
+				<h2 slot="heading-title" class="font-black text-brand-red h2 !my-4">Drop by and say hello</h2>
+				<div slot="heading-content">
+					<p>
+						We're located in the heart of the city, just a stone's throw away from the main square. Our
+						restaurant is the perfect place to enjoy a delicious meal with friends and family.
+					</p>
+
+					<span class="text-brand-red font-medium">
+						✔ We also do take-away, so you can enjoy your food at home
+					</span>
+
+					<div class="mt-8">
+						<Button color="red" url="/book">Book a table</Button>
+					</div>
+				</div>
+			</div>
+
+			<div slot="hero-content-right">
+				<Picture
+					class:list={"mx-auto"}
+					src={Dessert}
+					height={600}
+					formats={["avif", "webp"]}
+					alt="A description of my image."
+				/>
+			</div>
+		</Hero>
+	</Section>
+</Layout>
