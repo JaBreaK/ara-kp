@@ -7,6 +7,7 @@ const plates = defineCollection({
 		slug: z.string(),
 		prettyName: z.string(),
 		description: z.string(),
+		image: z.string().optional(), // ← tambahkan di sini
 		plates: z.array(
 			z.object({
 				name: z.string(),
@@ -16,6 +17,8 @@ const plates = defineCollection({
 		),
 	}),
 });
+
+
 
 const reviews = defineCollection({
 	loader: file("src/data/reviews.json"),

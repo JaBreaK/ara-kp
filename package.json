@@ -12,6 +12,7 @@
     "@astrojs/alpinejs": "^0.4.6",
     "@astrojs/mdx": "^4.2.4",
     "@playform/inline": "^0.1.2",
+    "@supabase/supabase-js": "^2.49.8",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.4",
     "@types/alpinejs": "^3.13.11",

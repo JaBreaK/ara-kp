@@ -1,8 +1,8 @@
 // Global variables
 export const siteLang = "id-ID";
 export const siteCurrency = "INA";
-export const siteDomain = "astropie.com";
-export const siteName = "ARA";
+export const siteDomain = "ara-kp.vercel.app";
+export const siteName = "Grafika Printing Gemilang";
 export const siteSlogan = "The best pies in the galaxy!";
 export const themeColor = "#FF0000";
 
@@ -12,8 +12,8 @@ export const phone = {
 };
 
 export const email = {
-	href: "mailto:info@astropie.com",
-	label: "info@astropie.com",
+	href: "mailto:grafikaprintinggemilang@gmail.com",
+	label: "grafikaprintinggemilang@gmail.com",
 };
 
 export const address = {
@@ -36,7 +36,7 @@ export const socialMedia = {
 		icon: "twitter",
 	},
 	instagram: {
-		url: "https://instagram.com",
+		url: "https://www.instagram.com/gigie_yen?igsh=cmQ1cm5td3A5cWYw",
 		label: "Instagram",
 		icon: "instagram",
 	},

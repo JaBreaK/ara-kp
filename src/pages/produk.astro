@@ -1,0 +1,17 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Heading from "~/components/Heading.astro";
+import MenuList from "~/components/Menu.astro";
+---
+
+<Layout title="Produk" pageTitle="Produk" description="Daftar produk percetakan kami">
+	<Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
+
+		<Heading>
+			<h1 slot="heading-title" class="font-black text-brand-green h2">Produk</h1>
+		</Heading>
+
+		<MenuList />
+	</Section>
+</Layout>

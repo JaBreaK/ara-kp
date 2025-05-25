@@ -2,11 +2,11 @@ export const menuMain = [
     {
         name: "Home",
         url: "/",
-        highlighted: true,
+        highlighted: false,
     },
     {
-        name: "Menu",
-        url: "/menu",
+        name: "Produk",
+        url: "/produk",
         highlighted: false,
     },
     {
@@ -20,14 +20,14 @@ export const menuMain = [
         highlighted: false,
     },
     {
-        name: "Contact",
-        url: "/contact",
+        name: "Kontak",
+        url: "/kontak",
         highlighted: false,
     },
     {
-        name: "Book",
-        url: "/book",
-        highlighted: false,
+        name: "Login",
+        url: "/login",
+        highlighted: true,
     },
 ];
 

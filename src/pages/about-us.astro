@@ -1,4 +1,5 @@
 ---
+// Imports
 import Layout from "~/layouts/Layout.astro";
 import Section from "~/components/Section.astro";
 import Hero from "~/components/Hero.astro";
@@ -6,94 +7,75 @@ import { Picture } from "astro:assets";
 import Badge from "~/components/Badge.astro";
 import Button from "~/components/Button.astro";
 import ButtonCallUs from "~/components/ButtonCallUs.astro";
-import Article from "~/components/Article.astro";
 
 // Images
 import PizzaHero from "~/assets/images/pizza-hero.png";
 ---
 
-<Layout>
-	<Section class:list={"bg-white"}>
-		<Hero>
-			<div slot="hero-content-left" class="prose max-w-none max-lg:order-1">
-				<Badge title="il ristorante italiana" />
-				<h1 class="font-black">Tentang Kami</h1>
+<Layout title="Tentang Kami" pageTitle="Tentang Kami" description="Profil Perusahaan Grafika Printing Gemilang">
+  <!-- Section untuk Hero -->
+ <Section class="bg-gradient-to-b from-brand-green/10 to-white">
+    <Hero>
+      <div slot="hero-content-left" class="prose max-w-none text-justify space-y-4">
+        <Badge
+          title="Profil Perusahaan"
+          class="bg-[var(--primary)] text-white px-6 py-2 rounded-full"
+        />
 
-				<p>
-					Grafika printing gemilang adalah perusahaan yang bergerak di bidang percetakan.Kami
-					menghadirkan solusi percetakan berkualitas tinggi untuk memenuhi kebutuhan bisnis dan pribadi Anda.
-					Dari kartu nama hingga brosur, kami memiliki semua yang Anda butuhkan untuk menciptakan kesan yang
-					tak terlupakan. Dengan pengalaman bertahun-tahun di industri ini, kami berkomitmen untuk memberikan
-					layanan terbaik kepada pelanggan kami. Kami menggunakan teknologi terbaru dan bahan berkualitas tinggi
-					untuk memastikan hasil cetakan yang sempurna setiap kali.Kami siap mendengarkan kebutuhan Anda, dengan layanan pelanggan yang ramah dan responsif,kami siap membantu Anda
-					dari awal hingga akhir. Kami memahami bahwa waktu adalah uang, dan kami berkomitmen untuk menyelesaikan
-					setiap proyek tepat waktu tanpa mengorbankan kualitas. Kami juga menawarkan layanan pengiriman untuk
-					memudahkan Anda menerima produk cetakan Anda di lokasi yang Anda inginkan. Apakah Anda memerlukan
-					percetakan untuk acara khusus, promosi bisnis, atau kebutuhan pribadi, kami siap membantu Anda. Kami
-					menghadirkan solusi percetakan yang sesuai dengan anggaran Anda tanpa mengorbankan kualitas. Dengan
-					berbagai pilihan produk dan layanan, kami siap membantu Anda menciptakan kesan yang tak terlupakan.
-					Jadi, jika Anda mencari percetakan berkualitas tinggi dengan layanan pelanggan yang luar biasa, tidak
-					perlu mencari lebih jauh. Grafika printing gemilang adalah pilihan yang tepat untuk Anda.
-				</p>
+        <!-- Heading diperbaiki: align justify dan jarak antar margin diperpendek -->
+        <h1 class="mt-4 mb-4 text-4xl font-bold text-[var(--primary)] lg:text-5xl">
+          Tentang Grafika Printing Gemilang
+        </h1>
 
-				<span class="text-brand-green font-medium">✔ We also deliver</span>
+        <div class="space-y-6 text-[var(--neutral-dark)]">
+          <p class="text-lg leading-relaxed">
+            Grafika Printing Gemilang adalah perusahaan yang bergerak di bidang percetakan. Kami menghadirkan solusi percetakan berkualitas tinggi untuk memenuhi kebutuhan bisnis dan pribadi Anda. Dari kartu nama hingga brosur, kami memiliki semua yang Anda butuhkan untuk menciptakan kesan yang tak terlupakan.
+          </p>
+          <p class="text-lg leading-relaxed">
+            Dengan pengalaman bertahun-tahun di industri ini, kami berkomitmen untuk memberikan layanan terbaik kepada pelanggan. Kami menggunakan teknologi terbaru dan bahan berkualitas tinggi untuk memastikan hasil cetakan yang sempurna setiap kali.
+          </p>
+          
+          <div class="rounded-xl bg-[var(--primary)/10] p-6">
+            <h3 class="mb-4 text-xl font-semibold text-[var(--primary)]">Visi &amp; Misi</h3>
+            <p class="text-lg leading-relaxed">
+              <strong>Visi:</strong> “Menjadi perusahaan percetakan terdepan yang berkontribusi aktif dalam mengurangi pengangguran melalui penciptaan lapangan kerja yang produktif, serta menyediakan layanan percetakan berkualitas tinggi yang inovatif dan berorientasi pada kepuasan pelanggan.”
+            </p>
+            <p class="text-lg leading-relaxed">
+              <strong>Misi:</strong> Kami berkomitmen untuk menyediakan layanan percetakan yang inovatif dan berkualitas tinggi, dengan mengutamakan kepuasan pelanggan melalui hasil cetakan yang tepat waktu dan sesuai kebutuhan. Dengan memberdayakan tenaga kerja lokal, kami menciptakan peluang kerja yang produktif, sekaligus meningkatkan keterampilan mereka melalui pelatihan berkelanjutan. Kami juga terus mengikuti perkembangan teknologi percetakan terkini untuk memastikan efisiensi dan kualitas layanan yang optimal. Melalui pendekatan ini, kami berupaya memberikan kontribusi positif bagi masyarakat dan pertumbuhan ekonomi lokal.
+            </p>
+          </div>
+        </div>
 
-				<div class="mt-8 flex items-center gap-x-8">
-					<Button url="/book">Book now</Button>
-					<ButtonCallUs />
-				</div>
-			</div>
-			<div slot="hero-content-right">
-				<Picture
-					class:list={"mx-auto"}
-					src={PizzaHero}
-					height={600}
-					formats={["avif", "webp"]}
+        <div class="mt-10 flex flex-wrap gap-6">
+          <Button
+            url="/"
+            class="bg-[var(--primary)] hover:bg-[var(--primary)/90] text-white px-8 py-4"
+          >
+            Pesan Sekarang
+          </Button>
+
+          <ButtonCallUs
+            class="border-2 border-[var(--primary)] px-8 py-4 text-[var(--primary)] hover:bg-[var(--primary)/10]"
+          />
+        </div>
+      </div>
+
+      <div slot="hero-content-right" class="relative group self-start">
+        <img
+					class="mx-auto"
+					src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/mesin.png"
+					height="600"
 					alt="A description of my image."
-					loading={"eager"}
-					fetchpriority={"high"}
+					loading="eager"
+					fetchpriority="high"
 				/>
-			</div>
-		</Hero>
-	</Section>
 
-	<Section class:list={'bg-white'}>
-		<Article>
-			<h2>Welcome to AstroPie</h2>
-			<p>
-				Nestled in the heart of the city, <strong>AstroPie</strong> offers an authentic Italian dining experience
-				like no other. From the moment you step through our doors, you'll be transported to the vibrant streets of
-				Italy, where good food and great company are at the center of life.
-			</p>
-
-			<h3>Our Story</h3>
-			<p>
-				Founded in <em>1998</em>, our family-owned restaurant has always been a labor of love. Inspired by the
-				recipes passed down through generations, we bring the <u>rich culinary heritage</u> of Italy to your plate.
-				Every dish tells a story, and every meal is a celebration of flavor.
-			</p>
-
-			<h3>Our Philosophy</h3>
-			<blockquote>"The secret ingredient is always love."</blockquote>
-			<p>
-				At AstroPie, we believe in the simple joy of fresh ingredients, time-honored techniques, and a
-				passion for creating memorable meals. From our hand-rolled pasta to our wood-fired pizzas, every bite is
-				crafted with care.
-			</p>
-
-			<h4>What Makes Us Special?</h4>
-			<ul>
-				<li><strong>Authenticity:</strong> Traditional recipes, just like Nonna used to make.</li>
-				<li><strong>Fresh Ingredients:</strong> Locally sourced produce and imported Italian staples.</li>
-				<li><strong>Warm Atmosphere:</strong> A place where everyone feels like family.</li>
-			</ul>
-
-			<h3>Join Us</h3>
-			<p>
-				Whether you're celebrating a special occasion or simply indulging in the pleasures of Italian cuisine, <strong
-					>AstroPie</strong
-				> is the perfect destination. <em>Come for the food, stay for the memories.</em>
-			</p>
-		</Article>
-	</Section>
+        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white px-6 py-2 shadow-md">
+          <span class="font-semibold text-sm text-[var(--primary)]">
+            Berkualitas • Cepat • Terjangkau
+          </span>
+        </div>
+      </div>
+    </Hero>
+  </Section>
 </Layout>
