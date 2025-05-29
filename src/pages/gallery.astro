@@ -7,8 +7,11 @@ import { Picture } from "astro:assets";
 const BASE_URL = 'https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/galery/';
 ---
 
-<Layout title="Gallery" pageTitle="Gallery" description="Explore our gallery to see the products and services we offer.">
-  <Section class:list={"[&>.container]:pb-0 bg-gradient-to-b from-brand-green/10 to-white"}>
+<Layout
+	pageTitle="Gallery - Grafika Printing Gemilang"
+	description="Percetakan Kertas Profesional"
+	>
+  <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
     <Heading>
       <h1 slot="heading-title" class="font-black text-brand-green h2">Gallery</h1>
       <p slot="heading-content" class="text-gray-700">
@@ -23,7 +26,7 @@ const BASE_URL = 'https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/pub
         const fileName = `galery ${index + 1}.png`;
         const src = `${BASE_URL}${encodeURIComponent(fileName)}`;
         return (
-          <div class="overflow-hidden rounded-xl shadow hover:shadow-lg transition-shadow duration-300">
+          <div key={index} class="overflow-hidden rounded-xl shadow hover:shadow-lg transition-shadow duration-300">
             <Picture
               src={src}
               alt={`Gallery ${index + 1}`}

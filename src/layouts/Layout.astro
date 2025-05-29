@@ -6,6 +6,7 @@ import Footer from "~/components/Footer.astro";
 const { pageTitle, title, description } = Astro.props;
 const baseUrl = `${Astro.url.protocol}//${Astro.url.host}`;
 import { siteLang, themeColor } from "~/data/config";
+import AOS from"aos";
 ---
 
 <!doctype html>
@@ -66,10 +67,14 @@ import { siteLang, themeColor } from "~/data/config";
 
 	</head>
 	<body>
-		<Header />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+    <Header />
+    <main client:load>
+      <script type="module" is:inline>
+        import { initScrollAnimations } from '/src/utils/scrollObserver.js';
+        initScrollAnimations({ once: true });
+      </script>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

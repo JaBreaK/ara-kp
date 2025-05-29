@@ -1,11 +1,15 @@
 
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase Assets Admin - Creative Wonderland</title>
   <!-- Tailwind CSS + Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; }
+    /* Animations */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
     @keyframes progressBar { from { width: 100%; } to { width: 0; } }
@@ -18,23 +22,28 @@
       display: flex; flex-direction: column; gap: 0.75rem;
       pointer-events: none;
     }
-    .toast-success { background: linear-gradient(135deg, #a8e063, #56ab2f); }
-    .toast-error { background: linear-gradient(135deg, #ff758c, #ff7eb3); }
+    .toast-success { background: linear-gradient(135deg, #84fab0, #8fd3f4); }
+    .toast-error { background: linear-gradient(135deg, #fc5c7d, #6a82fb); }
     .toast .progress {
       position: absolute; bottom: 0; left: 0; height: 4px;
       background: rgba(255,255,255,0.8);
       animation: progressBar 3s linear forwards;
     }
+    /* Background Waves */
+    .bg-waves {
+      background: url('https://assets.codepen.io/3/wave-top.svg') no-repeat top center;
+      background-size: cover;
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-green-100 via-emerald-100 to-lime-100 min-h-screen overflow-x-hidden">
-
+<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen overflow-x-hidden">
   <!-- Toast Container -->
   <div id="toast-container"></div>
 
   <!-- Header -->
   <header class="text-center py-12 fade-in">
-    <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-600">Creative Assets Admin</h1>
+    <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">Creative Assets Admin</h1>
+    <p class="mt-2 text-lg text-gray-600">Manage your assets in style 🌟</p>
   </header>
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,21 +54,26 @@
         <input type="hidden" id="asset-id" />
         <div class="md:col-span-2">
           <label class="block text-sm font-medium text-gray-700 mb-2">Choose Image</label>
-          <input type="file" id="file-input" accept="image/*" class="w-full text-sm text-gray-600 file:rounded-full file:bg-gradient-to-r file:from-green-400 file:to-emerald-400 file:text-white file:px-4 file:py-2 hover:file:opacity-90" />
+          <input type="file" id="file-input" accept="image/*" class="w-full text-sm text-gray-600 file:rounded-full file:bg-gradient-to-r file:from-purple-400 file:to-pink-400 file:text-white file:px-4 file:py-2 hover:file:opacity-90" />
           <img id="preview-img" src="" alt="Preview" class="hidden mt-4 w-32 h-32 object-cover rounded-lg shadow-inner" />
         </div>
         <div class="space-y-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">File Name</label>
-            <input type="text" id="name" placeholder="(Auto from filename)" class="w-full rounded-2xl border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 p-2" />
+            <input type="text" id="name" placeholder="(Auto from filename)" class="w-full rounded-2xl border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-2" />
           </div>
           <div class="flex space-x-4">
-            <button type="submit" class="flex-1 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold rounded-full shadow-lg hover:from-green-600 hover:to-emerald-600 transition">Save</button>
+            <button type="submit" class="flex-1 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg hover:from-pink-600 hover:to-purple-600 transition">Save</button>
             <button type="button" id="cancel-edit" class="hidden flex-1 py-2 bg-white text-gray-700 border-2 border-gray-300 rounded-full shadow hover:bg-gray-50 transition">Cancel</button>
           </div>
         </div>
       </form>
-      <button id="btn-logout" class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">Logout</button>
+      <button
+      id="btn-logout"
+      class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+    >
+      Logout
+    </button>
     </section>
 
     <!-- Cards -->
@@ -69,35 +83,39 @@
   <!-- Supabase & App Script -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-    const supabase = createClient('https://dmclzichnixtuoaujrqr.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs');
-    document.addEventListener('DOMContentLoaded', async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) location.href = '/login';
-    });
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  const supabase = createClient('https://dmclzichnixtuoaujrqr.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs');
+  document.addEventListener('DOMContentLoaded', async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) location.href = '/login';
+  });
+  
+    // Sinkronisasi logout di tab lain
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') {
+      window.location.replace('/login');
+    }
+  });
 
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT') {
-        window.location.replace('/login');
-      }
-    });
-
-    const btnLogout = document.getElementById('btn-logout');
-    btnLogout.addEventListener('click', async () => {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        alert('Logout gagal: ' + error.message);
-      } else {
-        window.location.href = '/login';
-      }
-    });
-  </script>
-
+  // Tombol logout
+      const btnLogout = document.getElementById('btn-logout');
+      btnLogout.addEventListener('click', async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+          alert('Logout gagal: ' + error.message);
+        } else {
+          window.location.href = '/login';
+        }
+      });
+</script>
   <script type="module">
     const { createClient } = supabase;
-    const supabaseClient = createClient('https://dmclzichnixtuoaujrqr.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs');
+    const SUPABASE_URL = 'https://dmclzichnixtuoaujrqr.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs';
     const BUCKET_NAME = 'images';
     const FOLDER_PREFIX = 'home/';
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const form = document.getElementById('asset-form');
     const fileInput = document.getElementById('file-input');
     const nameInput = document.getElementById('name');
@@ -108,14 +126,19 @@
     const toastContainer = document.getElementById('toast-container');
 
     function showNotification(msg, type='success') {
+      // Clear existing toasts
       toastContainer.innerHTML = '';
-      const icons = { success: '✅', error: '⚠️' };
+      const icons = { success: '🎉', error: '⚠️' };
       const animations = { success: 'animate-bounce', error: 'animate-pulse' };
       const el = document.createElement('div');
-      el.className = `toast toast-${type} fade-in ${animations[type]} p-4 text-white rounded-xl shadow-lg text-center`;
+      el.className = `toast toast-${type} fade-in ${animations[type]}`;
       el.style.pointerEvents = 'auto';
-      el.innerHTML = `${icons[type]} ${msg}`;
+      el.innerHTML = `
+        <span class="icon">${icons[type]}</span>
+        <span class="message text-center flex-1">${msg}</span>
+      `;
       toastContainer.appendChild(el);
+      // Auto-remove with fade out
       setTimeout(() => {
         el.classList.add('opacity-0');
         setTimeout(() => el.remove(), 500);
@@ -142,7 +165,7 @@
         card.className = 'bg-white bg-opacity-60 backdrop-blur-lg rounded-xl p-6 shadow-lg hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition duration-300 fade-in';
         card.style.animationDelay = `${delay}s`;
         card.innerHTML = `
-          <img src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/${BUCKET_NAME}/${FOLDER_PREFIX}${asset.name}?t=${Date.now()}" alt="${asset.name}" class="w-full h-44 object-cover rounded-md mb-4" />
+          <img src="${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${FOLDER_PREFIX}${asset.name}?t=${Date.now()}" alt="${asset.name}" class="w-full h-44 object-cover rounded-md mb-4" />
           <h3 class="font-semibold text-lg text-gray-800 mb-1 truncate">${asset.name}</h3>
           <p class="text-sm text-gray-600 mb-4">ID: ${asset.id}</p>
           <div class="flex space-x-2">
@@ -187,7 +210,7 @@
       if (error) return showNotification(error.message, 'error');
       idInput.value = data.id;
       nameInput.value = data.name;
-      previewImg.src = `https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/${BUCKET_NAME}/${FOLDER_PREFIX}${data.name}`;
+      previewImg.src = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${FOLDER_PREFIX}${data.name}`;
       previewImg.classList.remove('hidden');
       cancelBtn.classList.remove('hidden');
       document.getElementById('form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -207,7 +230,7 @@
       loadAssets(); showNotification('Asset successfully deleted!');
     }
 
+    // Initial load
     loadAssets();
   </script>
 </body>
-

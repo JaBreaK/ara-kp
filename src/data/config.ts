@@ -56,3 +56,4 @@ export const hours = {
 	saturday: "9:00 - 17:00",
 	sunday: "Closed",
 };
+

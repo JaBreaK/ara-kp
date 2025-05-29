@@ -24,11 +24,6 @@ export const menuMain = [
         url: "/kontak",
         highlighted: false,
     },
-    {
-        name: "Login",
-        url: "/login",
-        highlighted: true,
-    },
 ];
 
 export const footerPrimary = [
