@@ -6,7 +6,6 @@ import Footer from "~/components/Footer.astro";
 const { pageTitle, title, description } = Astro.props;
 const baseUrl = `${Astro.url.protocol}//${Astro.url.host}`;
 import { siteLang, themeColor } from "~/data/config";
-import AOS from"aos";
 ---
 
 <!doctype html>
@@ -64,15 +63,35 @@ import AOS from"aos";
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 />
+ <script type="module" is:inline>
+      // 1) Definisi fungsi
+      export function initScrollAnimations(options = {}) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate");
+              if (options.once) observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          ...options.observerOptions
+        });
+
+        document.querySelectorAll("[data-scroll]").forEach(el => {
+          observer.observe(el);
+        });
+      }
+
+      // 2) Panggil inisialisasi—sekali untuk seluruh halaman
+      initScrollAnimations({ once: true });
+    </script>
 
 	</head>
 	<body>
     <Header />
-    <main client:load>
-      <script type="module" is:inline>
-        import { initScrollAnimations } from '/src/utils/scrollObserver.js';
-        initScrollAnimations({ once: true });
-      </script>
+    <main >
+
       <slot />
     </main>
     <Footer />
