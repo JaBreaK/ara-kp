@@ -1,39 +1,25 @@
 ---
+import { supabase } from "../lib/supabase";
 
-import { supabase } from '~/lib/supabase';
-import type { Plate } from '~/types';
 
 // Fetch data from Supabase
-const { data: plates, error } = await supabase
-  .from<'plates', Plate>('plates')
-  .select('slug, judul, deskripsi, image_path')
+const { data: produk, error } = await supabase
+  .from<'produk', Plate>('produk')
+  .select('slug, judul, deskripsi, gambar')
   .order('id', { ascending: true });
 
 if (error) {
   console.error(error);
-  throw new Error('Gagal memuat data plates dari Supabase');
+  throw new Error('Gagal memuat data produk dari Supabase');
 }
-
-// Map to include public URL for images
-const platesWithUrl = plates.map((p) => {
-  const { publicURL } = supabase
-    .storage
-    .from('plate-images')
-    .getPublicUrl(p.image_path);
-  return {
-    ...p,
-    gambar: publicURL || null,
-  };
-});
 ---
-
 <div class="grid grid-cols-1 md:grid-cols-[220px_minmax(0,_1fr)] gap-8 max-w-screen-xl mx-auto px-6 py-12">
   <!-- Sidebar Navigasi -->
   <aside class="hidden md:block">
     <div id="plate-nav-wrapper" class="sticky top-8 z-10 h-full">
       <nav class="bg-brand-green text-white rounded-xl p-4 w-52">
         <ul id="plate-nav" class="space-y-2 text-sm">
-          {platesWithUrl.map((plate) => (
+          {produk.map((plate) => (
             <li>
               <a
                 href={`#${plate.slug}`}
@@ -51,7 +37,7 @@ const platesWithUrl = plates.map((p) => {
 
   <!-- Konten Utama -->
   <main class="space-y-24">
-    {platesWithUrl.map((plate) => (
+    {produk.map((plate) => (
       <section
         id={plate.slug}
         class="scroll-mt-20 space-y-10 max-w-2xl mx-auto text-center"
@@ -60,20 +46,25 @@ const platesWithUrl = plates.map((p) => {
         <h3 class="text-brand-green text-xl font-semibold tracking-wide">
           {plate.judul}
         </h3>
-        {plate.gambar && (
+
+        {plate.gambar ? (
           <img
             src={plate.gambar}
             alt={plate.judul}
             class="mx-auto rounded-lg max-w-xs"
           />
+        ) : (
+          <div class="text-red-500 text-sm">
+            ⚠️ Gambar untuk “{plate.judul}” tidak tersedia.
+          </div>
         )}
+
         <p class="text-gray-700 text-sm">{plate.deskripsi}</p>
       </section>
     ))}
   </main>
 </div>
 
-<!-- Styling Scrollable Sidebar -->
 <style>
   #plate-nav-wrapper {
     height: calc(100vh - 2rem);
@@ -81,7 +72,6 @@ const platesWithUrl = plates.map((p) => {
   }
 </style>
 
-<!-- Scrollspy Script -->
 <script type="module">
   document.addEventListener("astro:page-load", () => {
     const links = document.querySelectorAll("[data-category-link]");

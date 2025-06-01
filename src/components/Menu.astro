@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { siteLang, siteCurrency } from "~/data/config";
+import { siteLang, siteCurrency } from "../data/config";
 const plates = await getCollection("plates");
 const siteLangFormat = siteLang.replace("_", "-");
 ---

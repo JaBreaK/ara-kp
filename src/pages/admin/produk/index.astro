@@ -1,0 +1,544 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Section from '../../../components/Section.astro';
+
+---
+
+<Layout
+	pageTitle="Admin - Grafika Printing Gemilang"
+	description="Percetakan Kertas Profesional"
+	>
+  <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
+
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Admin Produk</title>
+    <!-- Pastikan Tailwind sudah di‐build ke /dist/output.css -->
+    <link rel="stylesheet" href="/dist/output.css" />
+        <script type="module">
+      // Cek session di localStorage, jika tidak ada, redirect ke /login
+      document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('loggedIn') !== 'true') {
+          window.location.href = '/login';
+        }
+      });
+    </script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6 space-y-8">
+      <h1 class="text-3xl font-bold text-center text-green-600">
+        Halaman Admin Produk
+      </h1>
+
+      <!-- PESAN NOTIFIKASI -->
+      <div id="notif" class="hidden p-4 rounded-md text-sm"></div>
+
+      <!-- ========== Tombol “Kembali” ========== -->
+  <div class="px-4 py-2">
+    <button
+      type="button"
+      onclick="history.back()"
+      class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow hover:bg-gray-300 transition"
+    >
+      <!-- Anda bisa pakai icon back (misal ←) atau import SVG -->
+      <span class="mr-2">←</span>
+      <span>Kembali</span>
+    </button>
+  </div>
+
+      <!-- FORM TAMBAH / EDIT (tanpa input Slug) -->
+      <section class="bg-white shadow rounded-lg p-6">
+        <h2 id="form-title" class="text-xl font-semibold mb-4">
+          Tambah Produk Baru
+        </h2>
+        
+        <form id="form-produk" class="space-y-4" enctype="multipart/form-data">
+          <!-- Hidden input untuk menyimpan ID saat mode Edit -->
+          <input type="hidden" id="hidden-id" value="" />
+
+          <!-- Input Judul (Slug akan dibuat otomatis dari sini) -->
+          <div>
+            <label for="input-judul" class="block text-sm font-medium">
+              Judul
+            </label>
+            <input
+              id="input-judul"
+              type="text"
+              required
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-green-200"
+            />
+          </div>
+
+          <!-- Input Deskripsi -->
+          <div>
+            <label for="input-deskripsi" class="block text-sm font-medium">
+              Deskripsi
+            </label>
+            <textarea
+              id="input-deskripsi"
+              rows="3"
+              required
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-green-200"
+            ></textarea>
+          </div>
+
+          <!-- Input Gambar -->
+          <div>
+            <label for="input-gambar" class="block text-sm font-medium">
+              Gambar (PNG/JPG)
+            </label>
+            <input
+              id="input-gambar"
+              type="file"
+              accept="image/*"
+              class="mt-1 block w-full text-sm text-gray-900"
+            />
+            <p id="note-gambar" class="text-xs text-gray-500 mt-1 hidden">
+              * Kosongkan jika tidak ingin mengganti gambar saat edit.
+            </p>
+          </div>
+
+          <div class="flex gap-2">
+            <button
+              type="submit"
+              id="btn-submit"
+              class="bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition disabled:opacity-50"
+            >
+              Simpan
+            </button>
+            <button
+              type="button"
+              id="btn-cancel"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-medium hover:bg-gray-300 transition"
+            >
+              Batal
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- DAFTAR PRODUK -->
+      <section class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Daftar Produk</h2>
+        <div id="loading-list" class="text-gray-500">Memuat...</div>
+        <div id="table-container" class="overflow-x-auto hidden">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  ID
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Slug
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Judul
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Deskripsi
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Gambar
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Aksi
+                </th>
+              </tr>
+            </thead>
+            <tbody id="tbody-produk" class="bg-white divide-y divide-gray-200">
+              <!-- Baris produk akan di‐inject lewat JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script type="module">
+      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+      // Langsung tulis SUPABASE_URL & ANON_KEY di sini:
+      const SUPABASE_URL = "https://dmclzichnixtuoaujrqr.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs";
+
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Elemen‐elemen form & tampilan
+      const notifEl = document.getElementById("notif");
+      const formTitleEl = document.getElementById("form-title");
+      const formEl = document.getElementById("form-produk");
+      const hiddenIdEl = document.getElementById("hidden-id");
+      const judulEl = document.getElementById("input-judul");
+      const deskripsiEl = document.getElementById("input-deskripsi");
+      const gambarEl = document.getElementById("input-gambar");
+      const noteGambarEl = document.getElementById("note-gambar");
+      const btnSubmitEl = document.getElementById("btn-submit");
+      const btnCancelEl = document.getElementById("btn-cancel");
+
+      const loadingListEl = document.getElementById("loading-list");
+      const tableContainerEl = document.getElementById("table-container");
+      const tbodyProdukEl = document.getElementById("tbody-produk");
+
+      // State sederhana
+      let produkList = [];
+      let isEditing = false; // false = tambah, true = edit
+
+      // Fungsi tampilkan notifikasi
+      function showNotif(message, type = "error") {
+        notifEl.textContent = message;
+        notifEl.className = "";
+        if (type === "error") {
+          notifEl.classList.add(
+            "bg-red-100",
+            "text-red-700",
+            "p-4",
+            "rounded-md"
+          );
+        } else {
+          notifEl.classList.add(
+            "bg-green-100",
+            "text-green-700",
+            "p-4",
+            "rounded-md"
+          );
+        }
+        notifEl.classList.remove("hidden");
+        setTimeout(() => notifEl.classList.add("hidden"), 3000);
+      }
+
+      // Reset form ke mode Tambah
+      function resetForm() {
+        isEditing = false;
+        hiddenIdEl.value = "";
+        judulEl.value = "";
+        deskripsiEl.value = "";
+        gambarEl.value = "";
+        noteGambarEl.classList.add("hidden");
+        formTitleEl.textContent = "Tambah Produk Baru";
+        btnSubmitEl.textContent = "Simpan";
+      }
+
+      // Isi form untuk mode Edit (slug akan digenerate ulang saat submit)
+      function fillFormForEdit(produk) {
+        isEditing = true;
+        hiddenIdEl.value = produk.id;
+        judulEl.value = produk.judul;
+        deskripsiEl.value = produk.deskripsi;
+        gambarEl.value = "";
+        noteGambarEl.classList.remove("hidden");
+        formTitleEl.textContent = `Edit Produk ID ${produk.id}`;
+        btnSubmitEl.textContent = "Update";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Fetch semua data produk, kemudian render ke tabel
+      async function fetchProduk() {
+        loadingListEl.classList.remove("hidden");
+        tableContainerEl.classList.add("hidden");
+        tbodyProdukEl.innerHTML = "";
+
+        const { data, error } = await supabase
+          .from("produk")
+          .select("id, slug, judul, deskripsi, gambar")
+          .order("id", { ascending: true });
+
+        if (error) {
+          console.error("Error fetching produk:", error);
+          showNotif("Gagal memuat data produk.", "error");
+          loadingListEl.textContent = "Gagal memuat.";
+          return;
+        }
+
+        produkList = data || [];
+        renderTable();
+        loadingListEl.classList.add("hidden");
+        tableContainerEl.classList.remove("hidden");
+      }
+
+      // Render baris‐baris tabel berdasarkan produkList
+      function renderTable() {
+        tbodyProdukEl.innerHTML = "";
+
+        if (produkList.length === 0) {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 6;
+          td.classList.add(
+            "px-4",
+            "py-2",
+            "text-center",
+            "text-gray-500"
+          );
+          td.textContent = "Belum ada produk.";
+          tr.appendChild(td);
+          tbodyProdukEl.appendChild(tr);
+          return;
+        }
+
+        produkList.forEach((pr) => {
+          const tr = document.createElement("tr");
+
+          // Kolom ID
+          const tdId = document.createElement("td");
+          tdId.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdId.textContent = pr.id;
+          tr.appendChild(tdId);
+
+          // Kolom Slug
+          const tdSlug = document.createElement("td");
+          tdSlug.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdSlug.textContent = pr.slug;
+          tr.appendChild(tdSlug);
+
+          // Kolom Judul
+          const tdJudul = document.createElement("td");
+          tdJudul.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdJudul.textContent = pr.judul;
+          tr.appendChild(tdJudul);
+
+          // Kolom Deskripsi (tampilkan langsung; jika panjang bisa digantikan 
+          // dengan substring atau tooltip sesuai kebutuhan)
+          const tdDeskripsi = document.createElement("td");
+          tdDeskripsi.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdDeskripsi.textContent = pr.deskripsi;
+          tr.appendChild(tdDeskripsi);
+
+          // Kolom Gambar (preview kecil)
+          const tdGambar = document.createElement("td");
+          tdGambar.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          if (pr.gambar) {
+            const img = document.createElement("img");
+            img.src = pr.gambar;
+            img.alt = pr.judul;
+            img.classList.add(
+              "h-12",
+              "w-12",
+              "object-cover",
+              "rounded"
+            );
+            tdGambar.appendChild(img);
+          } else {
+            const span = document.createElement("span");
+            span.classList.add("text-xs", "text-red-500");
+            span.textContent = "Tidak ada";
+            tdGambar.appendChild(span);
+          }
+          tr.appendChild(tdGambar);
+
+          // Kolom Aksi (Edit + Delete)
+          const tdAksi = document.createElement("td");
+          tdAksi.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700",
+            "space-x-2"
+          );
+
+          // Tombol Edit
+          const btnEdit = document.createElement("button");
+          btnEdit.textContent = "Edit";
+          btnEdit.classList.add(
+            "px-2",
+            "py-1",
+            "bg-blue-500",
+            "text-white",
+            "rounded",
+            "hover:bg-blue-600",
+            "text-xs"
+          );
+          btnEdit.addEventListener("click", () => fillFormForEdit(pr));
+          tdAksi.appendChild(btnEdit);
+
+          // Tombol Delete
+          const btnDelete = document.createElement("button");
+          btnDelete.textContent = "Delete";
+          btnDelete.classList.add(
+            "px-2",
+            "py-1",
+            "bg-red-500",
+            "text-white",
+            "rounded",
+            "hover:bg-red-600",
+            "text-xs"
+          );
+          btnDelete.addEventListener("click", () => handleDelete(pr));
+          tdAksi.appendChild(btnDelete);
+
+          tr.appendChild(tdAksi);
+          tbodyProdukEl.appendChild(tr);
+        });
+      }
+
+      // Handle form submit (Create / Update)
+      formEl.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        btnSubmitEl.disabled = true;
+        btnSubmitEl.textContent = isEditing ? "Updating..." : "Menyimpan...";
+
+        const id = hiddenIdEl.value; // kalau kosong → INSERT
+        const rawJudul = judulEl.value.trim();
+        const judul = rawJudul;
+        // GENERATE SLUG dari judul:
+        const slug = rawJudul
+          .toLowerCase()
+          .replace(/\s+/g, "-")       // ganti spasi → hyphen
+          .replace(/[^a-z0-9\-]/g, ""); // hapus karakter selain a–z, 0–9, dan hyphen
+
+        const deskripsi = deskripsiEl.value.trim();
+        const fileGambar = gambarEl.files[0] || null;
+
+        try {
+          let publicUrl = null;
+
+          // Kalau ada file, upload dulu:
+          if (fileGambar) {
+            const timestamp = Date.now();
+            const namaFile = `${slug}-${timestamp}-${fileGambar.name}`;
+            const { error: uploadError } = await supabase
+              .storage
+              .from("images")
+              .upload(`produk/${namaFile}`, fileGambar, {
+                cacheControl: "3600",
+                upsert: false,
+              });
+            if (uploadError) throw uploadError;
+
+            const { data: urlData, error: urlError } = supabase
+              .storage
+              .from("images")
+              .getPublicUrl(`produk/${namaFile}`);
+            if (urlError) throw urlError;
+
+            publicUrl = urlData.publicUrl;
+          }
+
+          // Payload sekarang mencakup slug, judul, deskripsi, dan gambar (jika ada)
+          const payload = {
+            slug,
+            judul,
+            deskripsi,
+            ...(publicUrl && { gambar: publicUrl }),
+          };
+
+          if (!isEditing) {
+            // INSERT baru
+            const { error: insertError } = await supabase
+              .from("produk")
+              .insert(payload);
+            if (insertError) throw insertError;
+            showNotif("Produk berhasil ditambahkan!", "success");
+          } else {
+            // UPDATE
+            const { error: updateError } = await supabase
+              .from("produk")
+              .update(payload)
+              .eq("id", id);
+            if (updateError) throw updateError;
+            showNotif("Produk berhasil diupdate!", "success");
+          }
+
+          // Reset form & reload data
+          resetForm();
+          await fetchProduk();
+        } catch (err) {
+          console.error("Error saat submit:", err);
+          showNotif(err.message || "Gagal menyimpan data.", "error");
+        } finally {
+          btnSubmitEl.disabled = false;
+          btnSubmitEl.textContent = isEditing ? "Update" : "Simpan";
+        }
+      });
+
+      // Tombol Batal
+      btnCancelEl.addEventListener("click", (e) => {
+        e.preventDefault();
+        resetForm();
+      });
+
+      // Hapus produk + hapus file di Storage jika ada
+      async function handleDelete(produk) {
+        const konfirmasi = confirm(
+          `Yakin ingin menghapus produk "${produk.judul}"?`
+        );
+        if (!konfirmasi) return;
+
+        try {
+          // Hapus record di tabel
+          const { error: deleteError } = await supabase
+            .from("produk")
+            .delete()
+            .eq("id", produk.id);
+          if (deleteError) throw deleteError;
+
+          // Hapus file di Storage (jika ada)
+          if (produk.gambar) {
+            const urlObj = new URL(produk.gambar);
+            const pathPub = urlObj.pathname; // e.g. "/storage/v1/object/public/images/produk/namaFile.png"
+            const parts = pathPub.split("/public/");
+            if (parts[1]) {
+              const fullPath = parts[1]; // "images/produk/namaFile.png"
+              const relative = fullPath.replace(/^images\//, ""); // "produk/namaFile.png"
+              const { error: removeError } = await supabase.storage
+                .from("images")
+                .remove([relative]);
+              if (removeError)
+                console.warn("Gagal remove file di Storage:", removeError);
+            }
+          }
+
+          showNotif("Produk berhasil dihapus.", "success");
+          await fetchProduk();
+        } catch (err) {
+          console.error("Error saat delete:", err);
+          showNotif(err.message || "Gagal menghapus produk.", "error");
+        }
+      }
+
+      // Inisialisasi: Fetch data pertama kali
+      window.addEventListener("DOMContentLoaded", fetchProduk);
+    </script>
+  </body>
+</html>
+>
+  </Section>
+</Layout>

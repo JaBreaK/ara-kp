@@ -1,5 +1,5 @@
 ---
-import { menuMain } from "~/data/menus.js";
+import { menuMain } from "../data/menus.js";
 
 const rmTrailingSlash = (path: string): string =>
   path.endsWith("/") && path.length > 1 ? path.slice(0, -1) : path;

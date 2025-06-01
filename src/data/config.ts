@@ -1,7 +1,6 @@
 // Global variables
 export const siteLang = "id-ID";
 export const siteCurrency = "INA";
-export const siteDomain = "ara-kp.vercel.app";
 export const siteName = "Grafika Printing Gemilang";
 export const siteSlogan = "The best pies in the galaxy!";
 export const themeColor = "#FF0000";

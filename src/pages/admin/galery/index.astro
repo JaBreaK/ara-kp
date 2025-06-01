@@ -1,0 +1,493 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Section from '../../../components/Section.astro';
+
+
+---
+
+<Layout
+	pageTitle="Admin - Grafika Printing Gemilang"
+	description="Percetakan Kertas Profesional"
+	>
+  <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
+
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Admin Galery</title>
+    <!-- Pastikan Tailwind sudah di‐build ke /dist/output.css -->
+        <script type="module">
+      // Cek session di localStorage, jika tidak ada, redirect ke /login
+      document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('loggedIn') !== 'true') {
+          window.location.href = '/login';
+        }
+      });
+    </script>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6 space-y-8">
+      <h1 class="text-3xl font-bold text-center text-green-600">
+        Halaman Admin Galery
+      </h1>
+
+      <!-- ========== Tombol “Kembali” ========== -->
+  <div class="px-4 py-2">
+    <button
+      type="button"
+      onclick="history.back()"
+      class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-md shadow hover:bg-gray-300 transition"
+    >
+      <!-- Anda bisa pakai icon back (misal ←) atau import SVG -->
+      <span class="mr-2">←</span>
+      <span>Kembali</span>
+    </button>
+  </div>
+
+      <!-- PESAN NOTIFIKASI -->
+      <div id="notif" class="hidden p-4 rounded-md text-sm"></div>
+
+      <!-- FORM TAMBAH / EDIT GALERY -->
+      <section class="bg-white shadow rounded-lg p-6">
+        <h2 id="form-title" class="text-xl font-semibold mb-4">
+          Tambah Galery Baru
+        </h2>
+        <form id="form-galery" class="space-y-4" enctype="multipart/form-data">
+          <!-- Hidden input untuk menyimpan ID saat mode Edit -->
+          <input type="hidden" id="hidden-id" value="" />
+
+          <!-- Input Name -->
+          <div>
+            <label for="input-name" class="block text-sm font-medium">
+              Nama File
+            </label>
+            <input
+              id="input-name"
+              type="text"
+              required
+              placeholder="Misal: gallery 1.png"
+              class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-green-200"
+            />
+          </div>
+
+          <!-- Input Gambar -->
+          <div>
+            <label for="input-gambar" class="block text-sm font-medium">
+              File Gambar (PNG/JPG)
+            </label>
+            <input
+              id="input-gambar"
+              type="file"
+              accept="image/*"
+              class="mt-1 block w-full text-sm text-gray-900"
+            />
+            <p id="note-gambar" class="text-xs text-gray-500 mt-1 hidden">
+              * Kosongkan jika tidak ingin mengganti gambar saat edit.
+            </p>
+          </div>
+
+          <div class="flex gap-2">
+            <button
+              type="submit"
+              id="btn-submit"
+              class="bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition disabled:opacity-50"
+            >
+              Simpan
+            </button>
+            <button
+              type="button"
+              id="btn-cancel"
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-medium hover:bg-gray-300 transition"
+            >
+              Batal
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- DAFTAR GALERY -->
+      <section class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">Daftar Galery</h2>
+        <div id="loading-list" class="text-gray-500">Memuat...</div>
+        <div id="table-container" class="overflow-x-auto hidden">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  ID
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Name
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Gambar
+                </th>
+                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                  Aksi
+                </th>
+              </tr>
+            </thead>
+            <tbody id="tbody-galery" class="bg-white divide-y divide-gray-200">
+              <!-- Baris data galery di‐inject di sini -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- SCRIPT VANILLA JS untuk CRUD + upload gambar ke Supabase Storage -->
+    <script type="module">
+
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+      // Ganti dengan milikmu:
+      const SUPABASE_URL = "https://dmclzichnixtuoaujrqr.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs";
+
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Elemen‐elemen form & tampilan
+      const notifEl = document.getElementById("notif");
+      const formTitleEl = document.getElementById("form-title");
+      const formEl = document.getElementById("form-galery");
+      const hiddenIdEl = document.getElementById("hidden-id");
+      const nameEl = document.getElementById("input-name");
+      const gambarEl = document.getElementById("input-gambar");
+      const noteGambarEl = document.getElementById("note-gambar");
+      const btnSubmitEl = document.getElementById("btn-submit");
+      const btnCancelEl = document.getElementById("btn-cancel");
+
+      const loadingListEl = document.getElementById("loading-list");
+      const tableContainerEl = document.getElementById("table-container");
+      const tbodyGaleryEl = document.getElementById("tbody-galery");
+
+      // State sederhana
+      let galeryList = [];
+      let isEditing = false; // false = mode tambah, true = mode edit
+
+      // Fungsi tampilkan notifikasi
+      function showNotif(message, type = "error") {
+        notifEl.textContent = message;
+        notifEl.className = "";
+        if (type === "error") {
+          notifEl.classList.add(
+            "bg-red-100",
+            "text-red-700",
+            "p-4",
+            "rounded-md"
+          );
+        } else {
+          notifEl.classList.add(
+            "bg-green-100",
+            "text-green-700",
+            "p-4",
+            "rounded-md"
+          );
+        }
+        notifEl.classList.remove("hidden");
+        setTimeout(() => notifEl.classList.add("hidden"), 3000);
+      }
+
+      // Reset form ke mode Tambah
+      function resetForm() {
+        isEditing = false;
+        hiddenIdEl.value = "";
+        nameEl.value = "";
+        gambarEl.value = "";
+        noteGambarEl.classList.add("hidden");
+        formTitleEl.textContent = "Tambah Galery Baru";
+        btnSubmitEl.textContent = "Simpan";
+      }
+
+      // Isi form untuk mode Edit (name & gambar)
+      function fillFormForEdit(item) {
+        isEditing = true;
+        hiddenIdEl.value = item.id;
+        nameEl.value = item.name;
+        gambarEl.value = "";
+        noteGambarEl.classList.remove("hidden");
+        formTitleEl.textContent = `Edit Galery ID ${item.id}`;
+        btnSubmitEl.textContent = "Update";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Fetch semua data galery, lalu render tabel
+      async function fetchGalery() {
+        loadingListEl.classList.remove("hidden");
+        tableContainerEl.classList.add("hidden");
+        tbodyGaleryEl.innerHTML = "";
+
+        const { data, error } = await supabase
+          .from("galery")
+          .select("id, name, gambar")
+          .order("id", { ascending: true });
+
+        if (error) {
+          console.error("Error fetching galery:", error);
+          showNotif("Gagal memuat data galery.", "error");
+          loadingListEl.textContent = "Gagal memuat.";
+          return;
+        }
+
+        galeryList = data || [];
+        renderTable();
+        loadingListEl.classList.add("hidden");
+        tableContainerEl.classList.remove("hidden");
+      }
+
+      // Render baris‐baris tabel berdasarkan galeryList
+      function renderTable() {
+        tbodyGaleryEl.innerHTML = "";
+
+        if (galeryList.length === 0) {
+          const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.colSpan = 4;
+          td.classList.add(
+            "px-4",
+            "py-2",
+            "text-center",
+            "text-gray-500"
+          );
+          td.textContent = "Belum ada data galery.";
+          tr.appendChild(td);
+          tbodyGaleryEl.appendChild(tr);
+          return;
+        }
+
+        galeryList.forEach((item) => {
+          const tr = document.createElement("tr");
+
+          // Kolom ID
+          const tdId = document.createElement("td");
+          tdId.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdId.textContent = item.id;
+          tr.appendChild(tdId);
+
+          // Kolom Name
+          const tdName = document.createElement("td");
+          tdName.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          tdName.textContent = item.name;
+          tr.appendChild(tdName);
+
+          // Kolom Gambar (preview kecil)
+          const tdGambar = document.createElement("td");
+          tdGambar.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700"
+          );
+          if (item.gambar) {
+            const img = document.createElement("img");
+            img.src = item.gambar;
+            img.alt = item.name;
+            img.classList.add(
+              "h-12",
+              "w-12",
+              "object-cover",
+              "rounded"
+            );
+            tdGambar.appendChild(img);
+          } else {
+            const span = document.createElement("span");
+            span.classList.add("text-xs", "text-red-500");
+            span.textContent = "Tidak ada";
+            tdGambar.appendChild(span);
+          }
+          tr.appendChild(tdGambar);
+
+          // Kolom Aksi (Edit + Delete)
+          const tdAksi = document.createElement("td");
+          tdAksi.classList.add(
+            "px-4",
+            "py-2",
+            "whitespace-nowrap",
+            "text-sm",
+            "text-gray-700",
+            "space-x-2"
+          );
+
+          // Tombol Edit
+          const btnEdit = document.createElement("button");
+          btnEdit.textContent = "Edit";
+          btnEdit.classList.add(
+            "px-2",
+            "py-1",
+            "bg-blue-500",
+            "text-white",
+            "rounded",
+            "hover:bg-blue-600",
+            "text-xs"
+          );
+          btnEdit.addEventListener("click", () => fillFormForEdit(item));
+          tdAksi.appendChild(btnEdit);
+
+          // Tombol Delete
+          const btnDelete = document.createElement("button");
+          btnDelete.textContent = "Delete";
+          btnDelete.classList.add(
+            "px-2",
+            "py-1",
+            "bg-red-500",
+            "text-white",
+            "rounded",
+            "hover:bg-red-600",
+            "text-xs"
+          );
+          btnDelete.addEventListener("click", () => handleDelete(item));
+          tdAksi.appendChild(btnDelete);
+
+          tr.appendChild(tdAksi);
+          tbodyGaleryEl.appendChild(tr);
+        });
+      }
+
+      // Handle form submit (Create / Update)
+      formEl.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        btnSubmitEl.disabled = true;
+        btnSubmitEl.textContent = isEditing ? "Updating..." : "Menyimpan...";
+
+        const id = hiddenIdEl.value; // kalau kosong → INSERT
+        const name = nameEl.value.trim();
+        const fileGambar = gambarEl.files[0] || null;
+
+        try {
+          let publicUrl = null;
+
+          // Jika ada file, upload dulu
+          if (fileGambar) {
+            const timestamp = Date.now();
+            // Nama file: name-timestamp-namaOriginal.ext
+            const namaFile = `${name.replace(/\s+/g, "-").toLowerCase()}-${timestamp}-${
+              fileGambar.name
+            }`;
+
+            const { error: uploadError } = await supabase.storage
+              .from("images")
+              .upload(`galery/${namaFile}`, fileGambar, {
+                cacheControl: "3600",
+                upsert: false,
+              });
+            if (uploadError) throw uploadError;
+
+            // Ambil publicUrl dengan benar (v2 → data.publicUrl)
+            const { data: urlData, error: urlError } = supabase.storage
+              .from("images")
+              .getPublicUrl(`galery/${namaFile}`);
+            if (urlError) throw urlError;
+
+            publicUrl = urlData.publicUrl;
+          }
+
+          // Payload: name + gambar (jika file di‐upload)
+          const payload = {
+            name,
+            ...(publicUrl && { gambar: publicUrl }),
+          };
+
+          if (!isEditing) {
+            // INSERT baru
+            const { error: insertError } = await supabase
+              .from("galery")
+              .insert(payload);
+            if (insertError) throw insertError;
+            showNotif("Data galery berhasil ditambahkan!", "success");
+          } else {
+            // UPDATE existing
+            const { error: updateError } = await supabase
+              .from("galery")
+              .update(payload)
+              .eq("id", id);
+            if (updateError) throw updateError;
+            showNotif("Data galery berhasil diupdate!", "success");
+          }
+
+          // Reset form & reload data
+          resetForm();
+          await fetchGalery();
+        } catch (err) {
+          console.error("Error saat submit:", err);
+          showNotif(err.message || "Gagal menyimpan data.", "error");
+        } finally {
+          btnSubmitEl.disabled = false;
+          btnSubmitEl.textContent = isEditing ? "Update" : "Simpan";
+        }
+      });
+
+      // Tombol Batal
+      btnCancelEl.addEventListener("click", (e) => {
+        e.preventDefault();
+        resetForm();
+      });
+
+      // Hapus galery + hapus file di Storage jika ada
+      async function handleDelete(item) {
+        const konfirmasi = confirm(
+          `Yakin ingin menghapus data galery "${item.name}"?`
+        );
+        if (!konfirmasi) return;
+
+        try {
+          // 1) Hapus record di tabel
+          const { error: deleteError } = await supabase
+            .from("galery")
+            .delete()
+            .eq("id", item.id);
+          if (deleteError) throw deleteError;
+
+          // 2) Jika ada gambar, hapus juga file di Storage
+          if (item.gambar) {
+            const urlObj = new URL(item.gambar);
+            const pathPub = urlObj.pathname; // "/storage/v1/object/public/images/galery/namaFile.ext"
+            const parts = pathPub.split("/public/");
+            if (parts[1]) {
+              // "images/galery/namaFile.ext"
+              const fullPath = parts[1];
+              // Supabase remove butuh relatif terhadap bucket "images", jadi:
+              const relative = fullPath.replace(/^images\//, ""); // "galery/namaFile.ext"
+              const { error: removeError } = await supabase.storage
+                .from("images")
+                .remove([relative]);
+              if (removeError)
+                console.warn("Gagal menghapus file di Storage:", removeError);
+            }
+          }
+
+          showNotif("Data galery berhasil dihapus.", "success");
+          await fetchGalery();
+        } catch (err) {
+          console.error("Error saat delete:", err);
+          showNotif(err.message || "Gagal menghapus data galery.", "error");
+        }
+      }
+
+      // Inisialisasi: Fetch data pertama kali
+      window.addEventListener("DOMContentLoaded", fetchGalery);
+    </script>
+  </body>
+</html>
+
+  </Section>
+</Layout>

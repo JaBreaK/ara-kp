@@ -1,15 +1,73 @@
 ---
-import Layout from '~/layouts/Layout.astro';
-import Section from '~/components/Section.astro';
-import AdminForm from '~/components/admin.astro';
----
+import Layout from '../../layouts/Layout.astro';
 
+
+--- 
 <Layout
-	pageTitle="Admin - Grafika Printing Gemilang"
-	description="Percetakan Kertas Profesional"
-	>
-  <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
+  pageTitle="Admin Home"
+  description="Kelola halaman Home"
+>
+  <section class="flex flex-col items-center justify-center min-h-screen gap-6 bg-gray-50">
+    <script type="module">
+      // Cek session di localStorage, jika tidak ada, redirect ke /login
+      document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('loggedIn') !== 'true') {
+          window.location.href = '/login';
+        }
+      });
+    </script>
+    <h1 class="text-4xl font-extrabold text-brand-green">
+      Selamat Datang
+    </h1>
+    <p class="text-gray-600">
+      Silakan pilih salah satu menu di bawah untuk mengelola konten:
+    </p>
 
-    <AdminForm />
-  </Section>
+    <div class="flex flex-col sm:flex-row gap-4 mt-8">
+      <!-- Tombol Admin Home -->
+      <a
+        href="/admin/home"
+        onclick="window.location.href=this.href; returnfalse;"
+        class="px-8 py-3 bg-brand-green text-white rounded-lg shadow hover:bg-green-700 transition"
+      >
+        Home
+      </a>
+
+      <!-- Tombol Galery -->
+      <a
+        href="/admin/galery"
+        onclick="window.location.href=this.href; returnfalse;"
+        class="px-8 py-3 bg-brand-green text-white rounded-lg shadow hover:bg-green-700 transition"
+      >
+        Galery
+      </a>
+
+      <!-- Tombol Produk -->
+      <a
+        href="/admin/produk"
+        onclick="window.location.href=this.href; returnfalse;"
+        class="px-8 py-3 bg-brand-green text-white rounded-lg shadow hover:bg-green-700 transition"
+      >
+        Produk
+      </a>
+    </div>
+
+    <!-- Tombol Logout sekarang hanya melakukan redirect ke /login -->
+    <button
+      id="btn-logout"
+      onclick="window.location.href=this.href; returnfalse;"
+      class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+    >
+      Logout
+    </button>
+  </section>
 </Layout>
+
+<script type="module">
+  // Tombol logout: hapus session, redirect ke /login
+  document.getElementById('btn-logout').addEventListener('click', () => {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('username');
+    window.location.href = '/login';
+  });
+</script>
