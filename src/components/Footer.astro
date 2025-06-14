@@ -14,30 +14,45 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-gradient-to-b from-brand-green to-emerald-800 text-white">
   <div class="container mx-auto px-4 pt-16 pb-8">
     <!-- Logo Section -->
-<div class="text-center mb-12">
-  <a href="/login" target="_blank" class="inline-block transform hover:scale-105 transition duration-300">
-    <p class="font-bold text-4xl drop-shadow-lg">
-      <span class="bg-white text-brand-green px-6 py-3 rounded-xl shadow-lg hover:bg-opacity-90 transition">
-        {siteName}
-      </span>
-    </p>
-  </a>
-</div>
-
+    <div class="text-center mb-12">
+      <a
+        href="/login"
+        target="_blank"
+        class="inline-block transform hover:scale-105 transition duration-300"
+      >
+        <p class="font-bold text-4xl drop-shadow-lg">
+          <span
+            class="bg-white text-brand-green px-6 py-3 rounded-xl shadow-lg hover:bg-opacity-90 transition"
+          >
+            {siteName}
+          </span>
+        </p>
+      </a>
+    </div>
 
     <!-- Info Sections -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
       <!-- Contact -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">Kontak Kami</h4>
-        <div class="flex items-center space-x-3 hover:text-emerald-100 transition">
-          <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">
+          Kontak Kami
+        </h4>
+        <div
+          class="flex items-center space-x-3 hover:text-emerald-100 transition"
+        >
+          <div
+            class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center"
+          >
             <i class="fas fa-phone-alt text-sm"></i>
           </div>
           <a href={phone.href} class="hover:underline">{phone.label}</a>
         </div>
-        <div class="flex items-center space-x-3 hover:text-emerald-100 transition">
-          <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+        <div
+          class="flex items-center space-x-3 hover:text-emerald-100 transition"
+        >
+          <div
+            class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center"
+          >
             <i class="fas fa-envelope text-sm"></i>
           </div>
           <a href={email.href} class="hover:underline">{email.label}</a>
@@ -45,25 +60,41 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <!-- Address -->
+      <!-- Address -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">Lokasi</h4>
-        <div class="flex items-start space-x-3">
-          <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mt-1">
-            <i class="fas fa-map-marker-alt text-sm"></i>
+        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">
+          Lokasi
+        </h4>
+        <a href="https://g.co/kgs/emRMQiG" target="_blank" class="block">
+          <div class="flex items-start space-x-3">
+            <div
+              class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mt-1"
+            >
+              <i class="fas fa-map-marker-alt text-sm"></i>
+            </div>
+            <address class="not-italic space-y-2">
+              <p class="hover:text-emerald-100 transition">{address.street}</p>
+              <p class="hover:text-emerald-100 transition">
+                {address.city}, {address.state}
+              </p>
+              <p class="hover:text-emerald-100 transition">
+                {address.zip}
+                {address.country}
+              </p>
+            </address>
           </div>
-          <address class="not-italic space-y-2">
-            <p class="hover:text-emerald-100 transition">{address.street}</p>
-            <p class="hover:text-emerald-100 transition">{address.city}, {address.state}</p>
-            <p class="hover:text-emerald-100 transition">{address.zip} {address.country}</p>
-          </address>
-        </div>
+        </a>
       </div>
 
       <!-- Hours -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">Jam Operasional</h4>
+        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">
+          Jam Operasional
+        </h4>
         <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+          <div
+            class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center"
+          >
             <i class="fas fa-clock text-sm"></i>
           </div>
           <div class="space-y-2">
@@ -75,41 +106,50 @@ const currentYear = new Date().getFullYear();
 
       <!-- Social Media -->
       <div class="space-y-4">
-        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">Media Sosial</h4>
+        <h4 class="text-xl font-bold mb-4 border-l-4 border-white pl-3">
+          Media Sosial
+        </h4>
         <div class="flex space-x-4">
-          {Object.values(socialMedia).map((sm) => (
-            <a 
-              href={sm.url} 
-              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center 
+          {
+            Object.values(socialMedia).map((sm) => (
+              <a
+                href={sm.url}
+                class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center 
                      hover:bg-white/20 transition-all duration-300 hover:-translate-y-1"
-              aria-label={sm.label}>
-              <i class={`fab fa-${sm.icon} text-lg`}></i>
-            </a>
-          ))}
+                aria-label={sm.label}
+              >
+                <i class={`fab fa-${sm.icon} text-lg`} />
+              </a>
+            ))
+          }
         </div>
       </div>
     </div>
 
     <!-- Map Embed -->
-    <div class="mb-12 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20">
+    <div
+      class="mb-12 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20"
+    >
       <iframe
         title="Location map"
         width="100%"
         height="300"
         class="rounded-lg"
         src={`https://www.google.com/maps?q=${encodeURIComponent(
-          `${address.street}, ${address.city}, ${address.state}, ${address.country}`
+          `${address.street}, ${address.city}, ${address.state}, ${address.country}`,
         )}&output=embed`}
-        loading="lazy"
-      ></iframe>
+        loading="lazy"></iframe>
     </div>
-
     <!-- Copyright -->
     <div class="pt-8 border-t border-white/20">
       <p class="text-center text-sm text-white/80">
-        &copy; {currentYear} {siteName}. All rights reserved.
-        <a class="underline hover:text-white transition ml-2" href="/privacy-policy">
-          Privacy policy
+        &copy; {currentYear}
+        {siteName}.RAHEL AZZAHRA,ALMA ASHOFI, ANISA CHOIRUNISYA.
+        <a
+          class="underline hover:text-white transition ml-2"
+          href="/privacy-policy"
+        >
+        Privacy policy
         </a>
       </p>
     </div>

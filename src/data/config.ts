@@ -24,25 +24,10 @@ export const address = {
 };
 
 export const socialMedia = {
-	facebook: {
-		url: "https://facebook.com",
-		label: "Facebook",
-		icon: "facebook",
-	},
-	twitter: {
-		url: "https://twitter.com",
-		label: "Twitter",
-		icon: "twitter",
-	},
 	instagram: {
 		url: "https://www.instagram.com/gigie_yen?igsh=cmQ1cm5td3A5cWYw",
 		label: "Instagram",
 		icon: "instagram",
-	},
-	youtube: {
-		url: "https://youtube.com",
-		label: "YouTube",
-		icon: "youtube",
 	},
 };
 

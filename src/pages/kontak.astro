@@ -10,7 +10,11 @@ import FormContact from "../components/forms/FormContact.astro";
 	description="Percetakan Kertas Profesional"
 	>
   <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
-    <div class="max-w-3xl mx-auto text-center mb-12">
+    <div 
+      class="max-w-3xl mx-auto text-center mb-12"
+      data-scroll
+      style="transition-delay: 400ms;"
+    >
       <Heading>
         <h2 slot="heading-title" class="font-black text-brand-green text-4xl sm:text-5xl">
           Kontak
@@ -21,7 +25,11 @@ import FormContact from "../components/forms/FormContact.astro";
       </Heading>
     </div>
 
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div 
+      class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8"
+      data-scroll
+      style="transition-delay: 600ms;"
+    >
       <div class="bg-white shadow-md rounded-xl p-6 sm:p-8 space-y-6 border border-gray-100">
         <FormContact />
       </div>

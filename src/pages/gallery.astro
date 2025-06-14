@@ -7,7 +7,7 @@ import { Picture } from "astro:assets";
 // 1) Impor createClient dari Supabase JS
 import { createClient } from "@supabase/supabase-js";
 
-// 2) Konfigurasi Supabase (langsung tulis URL & ANON KEY)
+// 2) Konfigurasi Supabase
 const SUPABASE_URL   = "https://dmclzichnixtuoaujrqr.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRtY2x6aWNobml4dHVvYXVqcnFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc4OTI2MTgsImV4cCI6MjA2MzQ2ODYxOH0.x_UsXk_XzuLB6IS1na8VJwdEuVDZ3-ZerPnVh3GmpRs";
 
@@ -21,11 +21,9 @@ const { data: galeryData, error } = await supabase
 
 if (error) {
   console.error("Gagal fetch tabel galery:", error);
-  // Jika ingin fallback, bisa set galeryData = []:
-  // const galeryData = [];
 }
-
 ---
+
 <Layout
   pageTitle="Gallery - Grafika Printing Gemilang"
   description="Percetakan Kertas Profesional"
@@ -43,22 +41,18 @@ if (error) {
 
   <section class="px-4 sm:px-6 lg:px-8 pb-16 lg:pb-32">
     <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-      {/*
-        4) Iterasi lewat `galeryData`. 
-        Pastikan kolom `gambar` berisi URL publik (misal: https://…/images/galery/galery%201.png).
-        Jika `gambar` masih kosong, bisa fallback ke BASE_URL + name.
-      */}
       {galeryData && galeryData.length > 0 ? (
-        galeryData.map((item) => {
-          // Jika kolom `gambar` memang sudah public URL, langsung pakai itu.
-          // Jika belum (misal hanya menyimpan file name di kolom `name`), bisa:
-          // const src = item.gambar || `${BASE_URL}${encodeURIComponent(item.name)}`;
+        galeryData.map((item, index) => {
           const src = item.gambar;
+          // Hitung delay berdasarkan index untuk efek berurutan
+          const delay = 400 + (index * 100);
 
           return (
             <div
               key={item.id}
-              class="overflow-hidden rounded-xl shadow hover:shadow-lg transition-shadow duration-300"
+              class="overflow-hidden rounded-xl shadow hover:shadow-lg transition-all duration-300"
+              data-scroll
+              style={`transition-delay: ${delay}ms;`}
             >
               <Picture
                 src={src}

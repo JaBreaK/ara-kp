@@ -11,306 +11,388 @@ import WideImage from "../components/WideImage.astro";
 import ReviewSlider from "../components/ReviewSlider.astro";
 
 // Images
-
 ---
 
 <Layout
-	title="Home"
-	pageTitle="Home - Grafika Printing Gemilang"
-	description="Percetakan Kertas Profesional"
+    title="Home"
+    pageTitle="Home - Grafika Printing Gemilang"
+    description="Percetakan Kertas Profesional"
 >
-	<Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
-		<Hero>
-			<div
-			data-scroll
-			        style="transition-delay: 200ms;"
-				slot="hero-content-left"
-				class="prose max-w-none max-lg:order-1"
-			>
-				<Badge
+    <Section class:list={"bg-gradient-to-b from-brand-green/10 to-white"}>
+        <Hero>
+            <div
+                data-scroll
+                style="transition-delay: 200ms;"
+                slot="hero-content-left"
+                class="prose max-w-none max-lg:order-1"
+            >
+                <Badge
+                    data-scroll
+                    style="transition-delay: 250ms;"
+                    title="Selamat Datang"
+                    class:list={"animate-fade-in bg-brand-green text-white px-6 py-2 rounded-full"}
+                />
+                <h1
+                    data-scroll
+                    style="transition-delay: 300ms;"
+                    class="font-black text-3xl sm:text-5xl lg:text-6xl !mt-6 bg-gradient-to-r from-brand-green to-emerald-600 bg-clip-text text-transparent"
+                >
+                    Percetakan Kertas Profesional
+                </h1>
+                <p
+                    data-scroll
+                    style="transition-delay: 350ms;"
+                >
+                    Jangan Salah Pilih Percetakan! Kami adalah percetakan kertas
+                    profesional yang siap membantu Anda dalam mencetak berbagai
+                    jenis produk kertas berkualitas tinggi. Dengan pengalaman
+                    bertahun-tahun di industri ini, kami memahami betul
+                    kebutuhan Anda akan produk cetakan yang berkualitas dan
+                    tepat waktu.
+                </p>
+                <span 
+                    data-scroll
+                    style="transition-delay: 400ms;"
+                    class="text-brand-green font-medium"
+                >
+                </span>
+                <div 
+                    data-scroll
+                    style="transition-delay: 450ms;"
+                    class="mt-8 flex items-center gap-x-8"
+                >
+                    <Button href="/kontak" onclick="window.location.href=this.href; returnfalse;" target="_self" rel=""> PESAN SEKARANG</Button>
+                    <ButtonCallUs />
+                </div>
+            </div>
+            <div 
+                data-scroll
+                style="transition-delay: 500ms;"
+                slot="hero-content-right"
+            >
+                <img 
+                    class="mx-auto"
+                    src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/mesin.png"
+                    height="600"
+                    alt="A description of my image."
+                    loading="eager"
+                    fetchpriority="high"
+                />
+            </div>
+        </Hero>
+    </Section>
 
-					title="Selamat Datang"
-					class:list={"animate-fade-in bg-brand-green text-white px-6 py-2 rounded-full"}
-				/>
-				<h1
-					class="font-black text-3xl sm:text-5xl lg:text-6xl !mt-6 bg-gradient-to-r from-brand-green to-emerald-600 bg-clip-text text-transparent"
-				>
-					Percetakan Kertas Profesional
-				</h1>
-				<p>
-					Jangan Salah Pilih Percetakan! Kami adalah percetakan kertas
-					profesional yang siap membantu Anda dalam mencetak berbagai
-					jenis produk kertas berkualitas tinggi. Dengan pengalaman
-					bertahun-tahun di industri ini, kami memahami betul
-					kebutuhan Anda akan produk cetakan yang berkualitas dan
-					tepat waktu.
-				</p>
-				<span class="text-brand-green font-medium"
-					>✔ Kami juga bisa mengantar</span
-				>
-				<div 
-				    data-scroll
-			        style="transition-delay: 300ms;"
-					class="mt-8 flex items-center gap-x-8">
-					<Button url="/kontak">PESAN SEKARANG</Button>
-					<ButtonCallUs />
-				</div>
-			</div>
-			<div slot="hero-content-right">
-				<img 
-					data-scroll
-			        style="transition-delay: 400ms;"
-					class="mx-auto"
-					src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/mesin.png"
-					height="600"
-					alt="A description of my image."
-					loading="eager"
-					fetchpriority="high"
-				/>
-			</div>
-		</Hero>
-	</Section>
+    <WideImage
+        data-scroll
+        style="transition-delay: 300ms;"
+        alt="Just an image"
+        class:list={"aspect-video lg:aspect-[16/6]"}
+    />
 
-	<WideImage
-		data-scroll
-		style="transition-delay: 300ms;"
-		alt="Just an image"
-		class:list={"aspect-video lg:aspect-[16/6]"}
-	/>
+    <Section class:list={"bg-brand-cream"}>
+        <Heading>
+            <h2 
+                data-scroll
+                style="transition-delay: 200ms;"
+                slot="heading-title" 
+                class="font-black text-brand-green h2"
+            >
+                Produk Kami
+            </h2>
+            <span
+                data-scroll
+                style="transition-delay: 250ms;"
+                class="bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-emerald-600"
+            >
+                Produk kami adalah hasil dari proses cetak yang cermat dan
+                berkualitas tinggi. Bahan baku terbaik untuk memastikan setiap
+                produk yang kami hasilkan memenuhi standar kualitas yang tinggi.
+            </span>
+            <p 
+                data-scroll
+                style="transition-delay: 300ms;" 
+                slot="heading-content"
+            >
+                Produk kami adalah hasil dari proses cetak yang cermat dan
+                berkualitas tinggi. Bahan baku terbaik untuk memastikan setiap
+                produk yang kami hasilkan memenuhi standar kualitas yang tinggi.
+            </p>
+        </Heading>
 
-	<Section class:list={"bg-brand-cream"}>
-		<Heading>
-			<h2 	data-scroll
-			        style="transition-delay: 200ms;"
-					slot="heading-title" class="font-black text-brand-green h2">
-				Produk Kami
-			</h2>
-			<span
-				data-scroll
-			    style="transition-delay: 200ms;"
-				class="bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-emerald-600"
-			>
-				Produk kami adalah hasil dari proses cetak yang cermat dan
-				berkualitas tinggi. Bahan baku terbaik untuk memastikan setiap
-				produk yang kami hasilkan memenuhi standar kualitas yang tinggi.
-			</span>
-			<p data-scroll
-			        style="transition-delay: 200ms;" 
-			slot="heading-content">
-				Produk kami adalah hasil dari proses cetak yang cermat dan
-				berkualitas tinggi. Bahan baku terbaik untuk memastikan setiap
-				produk yang kami hasilkan memenuhi standar kualitas yang tinggi.
-			</p>
-		</Heading>
+        <Grid data-scroll style="transition-delay: 350ms;">
+            <div slot="grid-content-1">
+                <div class="flex flex-col items-center prose text-center">
+                    <img 
+                        data-scroll
+                        style="transition-delay: 400ms;"
+                        class="not-prose w-full h-auto"
+                        src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami1.png"
+                        alt="A description of my image."
+                        loading="lazy"
+                    />
+                </div>
+            </div>
 
-		<Grid 	data-scroll
-			    style="transition-delay: 200ms;">
-			<div slot="grid-content-1">
-				<div class="flex flex-col items-center prose text-center">
-					<img 	data-scroll
-			        style="transition-delay: 200ms;"
-						class="not-prose w-full h-auto"
-						src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami1.png"
-						alt="A description of my image."
-						loading="lazy"
-					/>
-				</div>
-			</div>
+            <div 
+                data-scroll
+                style="transition-delay: 450ms;"
+                slot="grid-content-2"
+            >
+                <div class="flex flex-col items-center prose text-center">
+                    <img 
+                        data-scroll
+                        style="transition-delay: 500ms;"
+                        class="not-prose w-full h-auto"
+                        src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami2.png"
+                        alt="A description of my image."
+                        loading="lazy"
+                    />
+                </div>
+            </div>
 
-			<div data-scroll
-			        style="transition-delay: 200ms;"
-					 slot="grid-content-2">
-				<div class="flex flex-col items-center prose text-center">
-					<img 
-						data-scroll
-			        style="transition-delay: 300ms;"
-						class="not-prose w-full h-auto"
-						src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami2.png"
-						alt="A description of my image."
-						loading="lazy"
-					/>
-				</div>
-			</div>
+            <div 
+                data-scroll
+                style="transition-delay: 550ms;"
+                slot="grid-content-3"
+            >
+                <div class="flex flex-col items-center prose text-center">
+                    <img 
+                        data-scroll
+                        style="transition-delay: 600ms;"
+                        class="not-prose w-full h-auto"
+                        src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami3.png"
+                        alt="A description of my image."
+                        loading="lazy"
+                    />
+                </div>
+            </div>
+        </Grid>
+    </Section>
 
-			<div data-scroll
-			        style="transition-delay: 200ms;"
-					slot="grid-content-3">
-				<div class="flex flex-col items-center prose text-center">
-					<img 	data-scroll
-			        style="transition-delay: 400ms;"
-						class="not-prose w-full h-auto"
-						src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/produkkami3.png"
-						alt="A description of my image."
-						loading="lazy"
-					/>
-				</div>
-			</div>
-		</Grid>
-	</Section>
+    <Section class:list={"bg-white"}>
+        <Hero>
+            <div 
+                data-scroll
+                style="transition-delay: 300ms;"
+                slot="hero-content-left" 
+                class="prose lg:order-2"
+            >
+                <h1 
+                    data-scroll
+                    style="transition-delay: 350ms;"
+                    class="font-black"
+                >
+                    Mesin Cetak
+                </h1>
 
-	<Section class:list={"bg-white"}>
-		<Hero>
-			<div 	data-scroll
-			        style="transition-delay: 300ms;"
-					slot="hero-content-left" class="prose lg:order-2">
-				<h1 class="font-black">Mesin Cetak</h1>
+                <p 
+                    data-scroll
+                    style="transition-delay: 400ms;"
+                >
+                    Mesin cetak adalah alat yang digunakan untuk mencetak teks
+                    dan gambar pada berbagai media, seperti kertas, karton, dan
+                    plastik. Dengan teknologi terbaru, mesin cetak kami mampu
+                    menghasilkan cetakan yang tajam dan berkualitas tinggi.
+                </p>
 
-				<p>
-					Mesin cetak adalah alat yang digunakan untuk mencetak teks
-					dan gambar pada berbagai media, seperti kertas, karton, dan
-					plastik. Dengan teknologi terbaru, mesin cetak kami mampu
-					menghasilkan cetakan yang tajam dan berkualitas tinggi.
-				</p>
+                <p 
+                    data-scroll
+                    style="transition-delay: 450ms;"
+                >
+                    Mesin cetak kami dilengkapi dengan teknologi canggih yang
+                    memungkinkan kami untuk mencetak dengan cepat dan efisien.
+                    Kami juga memiliki berbagai jenis mesin cetak untuk memenuhi
+                    kebutuhan cetak Anda, mulai dari cetakan kecil hingga besar.
+                </p>
 
-				<p>
-					Mesin cetak kami dilengkapi dengan teknologi canggih yang
-					memungkinkan kami untuk mencetak dengan cepat dan efisien.
-					Kami juga memiliki berbagai jenis mesin cetak untuk memenuhi
-					kebutuhan cetak Anda, mulai dari cetakan kecil hingga besar.
-				</p>
+                <div 
+                    data-scroll
+                    style="transition-delay: 500ms;"
+                    class="mt-8"
+                ></div>
+            </div>
+            <div 
+                data-scroll
+                style="transition-delay: 550ms;"
+                slot="hero-content-right"
+            >
+                <img 
+                    data-scroll
+                    style="transition-delay: 600ms;"
+                    class="mx-auto"
+                    src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/mesin.png"
+                    height="600"
+                    alt="A description of my image."
+                    loading="eager"
+                    fetchpriority="high"
+                />
+            </div>
+        </Hero>
+    </Section>
+    
+    <!-- Reviews -->
+    <Section class="bg-brand-white relative text-center">
+        <div class="py-8 sm:py-12 lg:py-16 flex flex-col md:flex-row items-center justify-center lg:min-h-[60vh]">
+            <!-- Bagian Penilaian Pelanggan -->
+            <div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
+                <Hero>
+                    <div
+                        data-scroll
+                        style="transition-delay: 200ms;"
+                        slot="hero-content-left"
+                        class="prose max-w-xs sm:max-w-sm text-center mx-auto text-sm"
+                    >
+                        <h2 
+                            data-scroll 
+                            style="transition-delay: 250ms;" 
+                            slot="heading-title" 
+                            class="font-black text-2xl sm:text-3xl mb-2"
+                        >
+                            PENILAIAN PELANGGAN
+                        </h2>
+                        <div 
+                            data-scroll
+                            style="transition-delay: 300ms;"
+                            class="w-12 h-1 bg-brand-red rounded mx-auto mb-4"
+                        ></div>
 
-				<div class="mt-8"></div>
-			</div>
-			<div 	data-scroll
-			        style="transition-delay: 400ms;"
-					slot="hero-content-right">
-				<img data-scroll
-			        style="transition-delay: 200ms;"
-					class="mx-auto"
-					src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/mesin.png"
-					height="600"
-					alt="A description of my image."
-					loading="eager"
-					fetchpriority="high"
-				/>
-			</div>
-		</Hero>
-	</Section>
-	<!-- Reviews -->
-	<Section class="bg-brand-white relative text-center">
-		{/* Wrapper utama: flex row, center horizontal & vertical */}
-		<div class="py-8 sm:py-12 lg:py-16 flex flex-col md:flex-row items-center justify-center lg:min-h-[60vh]">
-			{/* Bagian Penilaian Pelanggan */}
-			<div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
-  <Hero>
-    <div
-	
-      slot="hero-content-left"
-      class="prose max-w-xs sm:max-w-sm text-center mx-auto text-sm"
-    >
-      <h2 data-scroll style="transition-delay: 200ms;" slot="heading-title" class="font-black text-2xl sm:text-3xl mb-2">
-        PENILAIAN PELANGGAN
-      </h2>
-      <div class="w-12 h-1 bg-brand-red rounded mx-auto mb-4"></div>
+                        <div slot="heading-content">
+                            <p 
+                                data-scroll
+                                style="transition-delay: 350ms;" 
+                                class="text-gray-700 mb-6"
+                            >
+                                Kami selalu mengutamakan kepuasan pelanggan. Berikut beberapa ulasan klien kami tentang layanan percetakan berkualitas dari Grafika Printing Gemilang.
+                            </p>
 
-      <div slot="heading-content">
-        <p data-scroll style="transition-delay: 300ms;" class="text-gray-700 mb-6">
-          Kami selalu mengutamakan kepuasan pelanggan. Berikut beberapa ulasan klien kami tentang layanan percetakan berkualitas dari Grafika Printing Gemilang.
-        </p>
+                            <div 
+                                data-scroll
+                                style="transition-delay: 400ms;" 
+                                class="mx-auto w-full max-w-xs"
+                            >
+                                <ReviewSlider />
+                            </div>
+                        </div>
+                    </div>
+                </Hero>
+            </div>
 
-        <div data-scroll style="transition-delay: 700ms;" class="mx-auto w-full max-w-xs">
-          <ReviewSlider />
+            <!-- Bagian Kerjasama Bisnis -->
+            <div class="w-full md:w-1/2 px-4 sm:px-6">
+                <Hero>
+                    <div
+                        data-scroll
+                        style="transition-delay: 450ms;"
+                        slot="hero-content-left"
+                        class="prose max-w-none text-center mx-auto"
+                    >
+                        <h2
+                            data-scroll
+                            style="transition-delay: 500ms;"
+                            slot="heading-title"
+                            class="font-black text-4xl mb-2"
+                        >
+                            KERJASAMA BISNIS
+                        </h2>
+                        <div
+                            data-scroll
+                            style="transition-delay: 550ms;"
+                            class="w-16 h-1 bg-brand-blue rounded mx-auto mb-6"
+                        ></div>
+
+                        <div slot="heading-content">
+                            <p 
+                                data-scroll
+                                style="transition-delay: 600ms;"
+                                class="text-lg text-gray-700 mb-8 mx-auto max-w-xl"
+                            >
+                                Kami percaya bahwa kerjasama yang baik
+                                menghasilkan hasil yang luar biasa. Berikut
+                                adalah beberapa mitra kami dari berbagai
+                                industri yang telah bekerja sama dengan kami
+                                dalam menyediakan layanan percetakan
+                                berkualitas.
+                            </p>
+
+                            <div 
+                                data-scroll
+                                style="transition-delay: 650ms;"
+                                class="gap-8 mx-auto max-w-4xl"
+                            >
+                                <div
+                                    data-scroll
+                                    style="transition-delay: 700ms;"
+                                    class="p-4 bg-white shadow rounded-md text-center"
+                                >
+                                    <img
+                                        class="not-prose w-full h-auto max-w-[500px] mx-auto"
+                                        src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/review-authors.png"
+                                        alt="A description of my image."
+                                        loading="lazy"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Hero>
+            </div>
         </div>
-      </div>
-    </div>
-  </Hero>
-</div>
+    </Section>
 
+    <!-- Desserts -->
+    <Section class:list={"bg-white py-12 px-6"}>
+        <div
+            data-scroll
+            style="transition-delay: 200ms;"
+            class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto"
+        >
+            <!-- Kanan: Video -->
+            <div 
+                data-scroll
+                style="transition-delay: 300ms;"
+                class="md:w-1/2 order-1 md:order-2 flex justify-center"
+            >
+                <div
+                    data-scroll
+                    style="transition-delay: 350ms;"
+                    class="w-full max-w-xl aspect-video rounded-lg shadow-lg overflow-hidden"
+                >
+                    <video class="w-full h-full object-cover" controls>
+                        <source
+                            src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/videomesin.mp4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
 
-			{/* Bagian Kerjasama Bisnis */}
-			<div class="w-full md:w-1/2 px-4 sm:px-6">
-				{/* Hero untuk konten kanan */}
-				<Hero>
-					{/* Konten kanan */}
-					<div
-					ata-scroll
-			        style="transition-delay: 300ms;"
-						slot="hero-content-left"
-						class="prose max-w-none text-center mx-auto"
-					>
-						{/* Judul di tengah */}
-						<h2
-							slot="heading-title"
-							class="font-black text-4xl mb-2"
-						>
-							KERJASAMA BISNIS
-						</h2>
-						{/* Garis aksen di tengah */}
-						<div
-							class="w-16 h-1 bg-brand-blue rounded mx-auto mb-6"
-						>
-						</div>
-
-						{
-							/* Paragraf di tengah, dibatasi lebar agar nyaman dibaca */
-						}
-						<div slot="heading-content">
-							<p  ata-scroll
-			        style="transition-delay: 300ms;"
-								class="text-lg text-gray-700 mb-8 mx-auto max-w-xl"
-							>
-								Kami percaya bahwa kerjasama yang baik
-								menghasilkan hasil yang luar biasa. Berikut
-								adalah beberapa mitra kami dari berbagai
-								industri yang telah bekerja sama dengan kami
-								dalam menyediakan layanan percetakan
-								berkualitas.
-							</p>
-
-							{/* Gallery atau daftar mitra */}
-							<div class="gap-8 mx-auto max-w-4xl">
-								<div
-									class="p-4 bg-white shadow rounded-md text-center"
-								>
-									<img
-										class="not-prose w-full h-auto max-w-[500px] mx-auto"
-										src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/review-authors.png"
-										alt="A description of my image."
-										loading="lazy"
-									/>
-								</div>
-							</div>
-						</div>
-					</div>
-				</Hero>
-			</div>
-		</div>
-	</Section>
-
-	<!-- Desserts -->
-	<Section class:list={"bg-white py-12 px-6"}>
-		<div
-			class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto"
-		>
-			<!-- Kanan: Video -->
-			<div class="md:w-1/2 order-1 md:order-2 flex justify-center">
-				<div
-					class="w-full max-w-xl aspect-video rounded-lg shadow-lg overflow-hidden"
-				>
-					<video class="w-full h-full object-cover" controls>
-						<source
-							src="https://dmclzichnixtuoaujrqr.supabase.co/storage/v1/object/public/images/home/videomesin.mp4"
-							type="video/mp4"
-						/>
-						Your browser does not support the video tag.
-					</video>
-				</div>
-			</div>
-
-			<!-- Kiri: Teks -->
-			<div class="md:w-1/2 order-2 md:order-1">
-				<h2 class="text-3xl font-extrabold text-brand-green mb-4">
-					Proses Percetak
-				</h2>
-				<p class="text-gray-700 leading-relaxed">
-					Proses percetakan kami adalah hasil dari proses cetak yang
-					cermat dan berkualitas tinggi. Kami hanya menggunakan bahan
-					baku terbaik untuk memastikan setiap produk memenuhi standar
-					kualitas tinggi. Teknologi terbaru dan mesin cetak canggih
-					digunakan untuk memastikan hasil cetakan yang tajam, jelas,
-					dan tahan lama.
-				</p>
-			</div>
-		</div>
-	</Section>
+            <!-- Kiri: Teks -->
+            <div 
+                data-scroll
+                style="transition-delay: 400ms;"
+                class="md:w-1/2 order-2 md:order-1"
+            >
+                <h2 
+                    data-scroll
+                    style="transition-delay: 450ms;"
+                    class="text-3xl font-extrabold text-brand-green mb-4"
+                >
+                    Proses Percetak
+                </h2>
+                <p 
+                    data-scroll
+                    style="transition-delay: 500ms;"
+                    class="text-gray-700 leading-relaxed"
+                >
+                    Proses percetakan kami adalah hasil dari proses cetak yang
+                    cermat dan berkualitas tinggi. Kami hanya menggunakan bahan
+                    baku terbaik untuk memastikan setiap produk memenuhi standar
+                    kualitas tinggi. Teknologi terbaru dan mesin cetak canggih
+                    digunakan untuk memastikan hasil cetakan yang tajam, jelas,
+                    dan tahan lama.
+                </p>
+            </div>
+        </div>
+    </Section>
 </Layout>
